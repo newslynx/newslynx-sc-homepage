@@ -1,0 +1,53 @@
+
+name: Time on Homepage
+slug: homepage-to-content-timeseries
+description: Checks your homepage for content items and computes how long each article has been promoted over time.
+runs: newslynx_sc_homepage.metrics.TimeOnHomepage
+options:
+    page:
+        input_type: text
+        value_types:
+            - url
+        required: true
+        help:
+            description: The url of the homepage to monitor
+            placeholder: http://propalpatine.org 
+
+    schedule_by:
+        input_type: select 
+        input_options:
+            - minutes
+            - time_of_day
+            - crontab
+            - unscheduled
+        value_types: 
+            - string
+            - nulltype
+        default: minutes
+        help:
+            placeholder: minutes
+            description: The method for scheduling the recipe.
+
+    minutes:
+        input_type: number
+        value_types: 
+            - numeric
+            - nulltype
+        default: 60
+        help:
+            placeholder: 60
+            description: The frequency with which this recipe should run (in minutes).
+
+metrics:
+    time_on_homepage:
+        display_name: Time on Homepage 
+        type: count
+        content_levels:
+            - timeseries 
+            - summary 
+            - comparison 
+        org_levels:
+            - timeseries
+            - summary 
+        agg: sum
+
